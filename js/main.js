@@ -1,6 +1,7 @@
 
 var map, bounds, largeInfowindow;
 var markers= [];
+var isVisible=false;
 
 //Setting up the details of the places to be marked using the marker
 var placesVisited = [
@@ -88,6 +89,8 @@ function initMap() {
 	}
 
 	map.fitBounds(bounds); // Extending boundaries to accomodate all the markers
+
+
 }
 
 //function to poulate infowindow with respect to each marker
@@ -106,3 +109,36 @@ function populateInfoWindow(marker, infowindow) {
 	}
 
 }
+
+var menu = document.getElementById('menu-btn');
+var listBox= document.getElementById('options-box');
+
+menu.addEventListener('click', makeVisible);
+
+function makeVisible() {
+	if(!isVisible)
+	{
+		listBox.classList.add('expand');
+		isVisible=true;
+	} 
+	else if(isVisible) {
+		listBox.classList.remove('expand');
+		isVisible=false;
+	}
+}
+
+var Cities= function(data) {
+	this.name = ko.observable(data.name);
+};
+
+var ViewModel = function() {
+	var self= this;
+
+	this.cityList= ko.observableArray([]);
+
+	placesVisited.forEach(function(city) {
+		self.cityList.push(new Cities(city));
+	})
+}
+
+ko.applyBindings(new ViewModel());
