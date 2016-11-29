@@ -1,48 +1,47 @@
 
 var map, bounds, largeInfowindow;
-var markers= [];
 var isVisible=false;
 
 //Setting up the details of the places to be marked using the marker
 var placesVisited = [
 	{ 
-		name:'Agra',
+		title:'Agra',
 		location: {lat: 27.176336, lng: 78.008611},
 		imgSrc:'img/Agra.jpg'
 	},{ 
-		name:'Ajmer',
+		title:'Ajmer',
 		location: {lat: 26.471992, lng: 74.622839},
 		imgSrc:'img/Ajmer.jpg'
 	},{ 
-		name:'Delhi',
+		title:'Delhi',
 		location: {lat: 28.610804, lng: 77.205187},
 		imgSrc:'img/Delhi.jpg'
 	},{ 
-		name:'Goa',
+		title:'Goa',
 		location: {lat: 15.396784, lng: 74.079475},
 		imgSrc:'img/Goa.jpg'
 	},{ 
-		name:'Jaipur',
+		title:'Jaipur',
 		location: {lat: 26.910318, lng: 75.790215},
 		imgSrc:'img/Jaipur.jpg'
 	},{ 
-		name:'Srinagar',
+		title:'Srinagar',
 		location: {lat: 34.109561, lng: 74.810532},
 		imgSrc:'img/Srinagar.jpg'
 	},{ 
-		name:'Kochi',
+		title:'Kochi',
 		location: {lat: 9.928466, lng: 76.272025},
 		imgSrc:'img/Kochi.jpg'
 	},{ 
-		name:'Manali',
+		title:'Manali',
 		location: {lat: 32.239346, lng: 77.189652},
 		imgSrc:'img/Manali.jpg'
 	},{ 
-		name:'Mumbai',
+		title:'Mumbai',
 		location: {lat: 19.077631, lng: 72.880174},
 		imgSrc:'img/Mumbai.jpg'
 	},{ 
-		name:'Thiruvananthpuram',
+		title:'Thiruvananthpuram',
 		location: {lat: 8.523501, lng: 76.935691},
 		imgSrc:'img/Thiruvananthpuram.jpg'
 	}
@@ -54,7 +53,7 @@ function initMap() {
     // Constructor creates a new map - only center and zoom are required.
     map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 22.712208, lng: 75.860111},
-    zoom: 18
+    zoom: 9
     });
 
 
@@ -63,8 +62,8 @@ function initMap() {
 
 
 	for (var i = 0; i < placesVisited.length ; i++) {
-		//Getting name and position from placesVisited array
-		var title = placesVisited[i].name;
+		//Getting title and position from placesVisited array
+		var title = placesVisited[i].title;
 		var position = placesVisited[i].location;
 		var imgsrc = placesVisited[i].imgSrc;
 
@@ -73,40 +72,69 @@ function initMap() {
 			map: map,
 			position: position,
 			title: title,
-			img: imgsrc,
-			animation: google.maps.Animation.DROP,
-			id: i
+			imgsrc: imgsrc,
+			animation: google.maps.Animation.DROP
 		});
 
-		markers.push(marker);	
+		placesVisited[i].markerObject = marker;
 
 		//Creating onclick event to open infowindow
 		marker.addListener('click', function() {
 			populateInfoWindow(this, largeInfowindow);
+			
 		});
 
-		bounds.extend(markers[i].position);// seting up bounds
+		bounds.extend(placesVisited[i].markerObject.position);// seting up bounds
 	}
 
 	map.fitBounds(bounds); // Extending boundaries to accomodate all the markers
 
-
+	ko.applyBindings(new ViewModel());
 }
+
+//Got from https://developers.google.com/maps/documentation/javascript/examples/marker-animations
+function toggleBounce(marker) {
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+            marker.setAnimation(null);
+        }, 750);
+    }
+}
+
 
 //function to poulate infowindow with respect to each marker
 function populateInfoWindow(marker, infowindow) {
 
-	//condition to check whether the infowindow for the clicked marker is already opened
+	var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+    var wikiRequestTimeout = setTimeout(function() {
+        alert("Failed to get wikipedia resources");
+    }, 8000);
+
+    $.ajax({
+        url: wikiUrl,
+        dataType: "jsonp",
+        // ajax settings
+        success: function(response) {
+            var wikiStr = response[0];
+            var url = 'http://en.wikipedia.org/wiki/' + wikiStr;
+            //condition to check whether the infowindow for the clicked marker is already opened
 	if(infowindow.marker != marker) {
+		console.log('Infowindow called');
 		infowindow.marker = marker;
-		infowindow.setContent('<div><img src="'+ marker.img +'" alt="IMAGE"/></div><div>'+ marker.title +'</div>');
+		 marker.addListener('click', toggleBounce(marker));
+		infowindow.setContent('<div><img src="'+ marker.imgsrc +'" alt="IMAGE"/></div><div>'+ marker.title +'</div><div><a href="'+ url +'">'+ url+'</a></div>');
 		infowindow.open(map,marker);
 
-		//Clearing the marker property on closing of infowindow
 		infowindow.addListener('closeclick', function() {
-			infowindow.setMarker(null);
-		});
+            infowindow.marker = null;
+          });
 	}
+            clearTimeout(wikiRequestTimeout);
+        }
+	});
 
 }
 
@@ -127,18 +155,41 @@ function makeVisible() {
 	}
 }
 
-var Cities= function(data) {
-	this.name = ko.observable(data.name);
-};
 
 var ViewModel = function() {
 	var self= this;
 
-	this.cityList= ko.observableArray([]);
+	this.data = ko.observable();
 
-	placesVisited.forEach(function(city) {
-		self.cityList.push(new Cities(city));
-	})
-}
+	self.placesVisited=ko.observable(placesVisited);
+	self.initMap=ko.observable(initMap);
+	
+	self.setMarker = function(placesVisited) {
+		map.setCenter(placesVisited.location);
+		populateInfoWindow(placesVisited.markerObject, largeInfowindow);
+	};
 
-ko.applyBindings(new ViewModel());
+
+	self.searchData=ko.observable('');
+
+	self.find = ko.computed(function() {
+		var newArray = ko.utils.arrayFilter(self.placesVisited(), function(place) {
+			if (place.title.toLowerCase().indexOf(self.searchData().toLowerCase()) >= 0) {
+                if (place.markerObject) {
+                    place.markerObject.setVisible(true);
+                }
+                return true;
+            } else {
+                if (place.markerObject) {
+                    place.markerObject.setVisible(false);
+                }
+                return false;
+            }
+        });
+		return newArray;
+	});
+};
+
+var googleFailure = function() {
+    alert('Could not load Google Map. Try again later');
+};
