@@ -1,44 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  	<title>Travel Map</title>
-    <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-  <div class="container">
-	
-	<div class="menu-btn" id="menu-btn">
-			<div></div>
-			<span></span>
-			<span></span>
-			<span></span>
-    	</div>
-    	 <div class="options-box" id="options-box">
-  	 	   <h1>Places I've Been</h1>
-
-  	 	   	<div> 
-  	 	   	<form>
-				<input type="text" class="searchInput" id="searchInput" data-bind="textInput: searchData" placeholder="Enter city to search...">
-			</form>
-				<hr>
-  	 	   	</div>
-	        <div id="city-list"> 
-				<ul data-bind="foreach: find">
-					<li data-bind="text: title, click: $parent.setMarker"></li>
-				</ul>
-	        </div>
-        
+   <head>
+      <title>Travel Map</title>
+      <link rel="stylesheet" href="css/style.css">
+   </head>
+   <body>
+      <div class="container">
+         <div class="menu-btn" id="menu-btn">
+            <div></div>
+            <span></span>
+            <span></span>
+            <span></span>
+         </div>
+         <div class="options-box" id="options-box">
+            <h1>Places I've Been</h1>
+            <div>
+               <form>
+                  <input type="text" class="searchInput" id="searchInput" data-bind="textInput: searchData" placeholder="Enter city to search...">
+               </form>
+               <hr>
+            </div>
+            <div id="city-list">
+               <ul data-bind="foreach: find">
+                  <li data-bind="text: title, click: $parent.setMarker"></li>
+               </ul>
+            </div>
+         </div>
+         <div id="map"></div>
       </div>
-
-    <div id="map"></div>
-    </div>
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/knockout-3.2.0.js"></script>
-	<script src="js/main.js"></script>
-    <script onerror="googleFailure()" async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-uwPPfjZ78bWtkwFDUD6DoNFe0Zf4hmM&v=3&callback=initMap">
-    </script>
-
-  </body>
+      <script src="js/jquery.min.js"></script>
+      <script src="js/knockout-3.2.0.js"></script>
+      <script src="js/main.js"></script>
+      <script onerror="googleFailure()" async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-uwPPfjZ78bWtkwFDUD6DoNFe0Zf4hmM&v=3&callback=initMap"></script>
+   </body>
 </html>

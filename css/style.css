@@ -1,30 +1,29 @@
-html, body {
+html,
+body {
     font-family: Arial, sans-serif;
     height: 100%;
     margin: 0;
     padding: 0;
-    background:rgba(0, 0, 0, 0.6); 
+    background: rgba(0, 0, 0, 0.6);
 }
-
- .container {
-        height: 100%;
-        position: relative;
-      }
-
+.container {
+    height: 100%;
+    position: relative;
+}
 #map {
-		top: 25px;
-        bottom:0px;
-        height: 92%;
-        left: 0px;
-        position: absolute;
-        right: 10px;
-        z-index: 80;
+    top: 25px;
+    bottom: 0px;
+    height: 92%;
+    left: 0px;
+    position: absolute;
+    right: 10px;
+    z-index: 80;
 }
-
 .options-box {
-    background:rgba(243, 236, 236, 0.6);
-        position: absolute;
+    background: rgba(243, 236, 236, 0.6);
+    position: absolute;
     /*border: 1px solid #999;*/
+    
     border-radius: 3px;
     height: 100%;
     line-height: 35px;
@@ -34,17 +33,15 @@ html, body {
     display: none;
     z-index: 85;
 }
-
 #main-heading {
-	left: 25px;
-	color: #525454;
+    left: 25px;
+    color: #525454;
     font-size: 22px;
     font-weight: bold;
     margin: 0 0 10px 0;
     text-align: center;
     text-decoration: underline;
 }
-
 h1 {
     color: #525454;
     font-size: 20px;
@@ -53,56 +50,140 @@ h1 {
     text-align: center;
     text-decoration: underline;
 }
-
 #menu-btn {
-	left:30px;
+    left: 30px;
 }
-
 #menu-btn div {
-
-	position: absolute;
-	top: 64%;
-	padding-right: 8px;
-	margin-top: -0.50em;
-	line-height: 1.2;
-	font-size: 18px;
-	font-weight: 200;
-	vertical-align: middle;
-	z-index: 99;
+    position: absolute;
+    top: 64%;
+    padding-right: 8px;
+    margin-top: -0.50em;
+    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 200;
+    vertical-align: middle;
+    z-index: 99;
 }
-
 #searchInput {
-	border: 2px solid #999;
-	border-radius: 4px;
-	height: 30px;
-	width: 250px;
+    border: 2px solid #999;
+    border-radius: 4px;
+    height: 30px;
+    width: 250px;
 }
- 
 #menu-btn span {
-
-	display: block;
-	width: 19px;
-	height: 3px;
-	margin: 4px 0;
-	background: white;
-	margin-left: 10px;
-	z-index: 99;
+    display: block;
+    width: 19px;
+    height: 3px;
+    margin: 4px 0;
+    background: white;
+    margin-left: 10px;
+    z-index: 99;
 }
-
 .expand {
-	display: block !important; 
+    display: block !important;
 }
-
 #city-list li {
-	font-weight: bold;
+    font-weight: bold;
 }
-
 #infowindowimg {
-	max-height: 200px;
-	max-width: 350px;
+    max-height: 200px;
+    max-width: 350px;
 }
-
 #infowindowtitle {
-	font-weight: bold;
-	font-size: 18px;
+    font-weight: bold;
+    font-size: 18px;
+html,
+body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+.container {
+    height: 100%;
+    position: relative;
+}
+#map {
+    top: 25px;
+    bottom: 0px;
+    height: 92%;
+    left: 0px;
+    position: absolute;
+    right: 10px;
+    z-index: 80;
+}
+.options-box {
+    background: rgba(243, 236, 236, 0.6);
+    position: absolute;
+    /*border: 1px solid #999;*/
+    
+    border-radius: 3px;
+    height: 100%;
+    line-height: 35px;
+    padding: 10px 10px 30px 10px;
+    text-align: left;
+    width: 250px;
+    display: none;
+    z-index: 85;
+}
+#main-heading {
+    left: 25px;
+    color: #525454;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    text-align: center;
+    text-decoration: underline;
+}
+h1 {
+    color: #525454;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    text-align: center;
+    text-decoration: underline;
+}
+#menu-btn {
+    left: 30px;
+}
+#menu-btn div {
+    position: absolute;
+    top: 64%;
+    padding-right: 8px;
+    margin-top: -0.50em;
+    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 200;
+    vertical-align: middle;
+    z-index: 99;
+}
+#searchInput {
+    border: 2px solid #999;
+    border-radius: 4px;
+    height: 30px;
+    width: 250px;
+}
+#menu-btn span {
+    display: block;
+    width: 19px;
+    height: 3px;
+    margin: 4px 0;
+    background: white;
+    margin-left: 10px;
+    z-index: 99;
+}
+.expand {
+    display: block !important;
+}
+#city-list li {
+    font-weight: bold;
+}
+#infowindowimg {
+    max-height: 200px;
+    max-width: 350px;
+}
+#infowindowtitle {
+    font-weight: bold;
+    font-size: 18px;
 }
