@@ -130,7 +130,7 @@ function toggleBounce(marker) {
         marker.setAnimation(google.maps.Animation.BOUNCE);
         setTimeout(function() {
             marker.setAnimation(null);
-        }, 750);
+        }, 3510);
     }
 }
 
@@ -147,7 +147,7 @@ function populateInfoWindow(marker, infowindow) {
         url: wikiUrl,
         dataType: "jsonp",
         // ajax settings
-        success: function(response) {
+      }).done(function(response) {
             var wikiStr = response[0];
             var url = 'http://en.wikipedia.org/wiki/' + wikiStr;
             //condition to check whether the infowindow for the clicked marker is already opened
@@ -163,8 +163,7 @@ function populateInfoWindow(marker, infowindow) {
                 });
             }
             clearTimeout(wikiRequestTimeout);
-        }
-    });
+        });
 
 }
 
