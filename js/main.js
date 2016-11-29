@@ -122,10 +122,10 @@ function populateInfoWindow(marker, infowindow) {
             var url = 'http://en.wikipedia.org/wiki/' + wikiStr;
             //condition to check whether the infowindow for the clicked marker is already opened
 	if(infowindow.marker != marker) {
-		console.log('Infowindow called');
+		//console.log('Infowindow called');
 		infowindow.marker = marker;
 		 marker.addListener('click', toggleBounce(marker));
-		infowindow.setContent('<div><img src="'+ marker.imgsrc +'" alt="IMAGE"/></div><div>'+ marker.title +'</div><div><a href="'+ url +'">'+ url+'</a></div>');
+		infowindow.setContent('<div><img id="infowindowimg" src="'+ marker.imgsrc +'" alt="IMAGE"/></div><div id="infowindowtitle">'+ marker.title +'</div><div><a href="'+ url +'">'+ url+'</a></div>');
 		infowindow.open(map,marker);
 
 		infowindow.addListener('closeclick', function() {
